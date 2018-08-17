@@ -22,14 +22,36 @@ class BlackjackGame
     
     puts "Lets begin, you bet $10"
 
-    hand = Hand.new
+    @hand = Hand.new
     2.times do 
-      hand.player_hand << @deck.shift 
+      @hand.player_hand << @deck.shift 
     end
 
-    puts "Your cards are #{hand.cards} with the total of #{hand.total}"
+    puts "Your cards are #{@hand.cards} with the total of #{@hand.total}"
 
-    puts "Would you like to (h)it or (s)tay?"
+    if @hand.total > 21
+      puts "Sorry you busted"
+      @wallet = @wallet - 10 
+
+    elsif @hand.total > 21 && @hand.includes?(:A)
+      @hand.total = @hand.total - 10 
+
+    elsif @hand.total < 21
+      puts "Would you like to (h)it or (s)tay?"
+
+    end
+
+    answer = gets.chomp
+
+    if answer == "h"
+      hit
+    end
+
+    puts "#{@hand.cards}, #{@hand.total}"
+  end
+
+  def hit
+    @hand.player_hand << @deck.shift
   end
 
 end
