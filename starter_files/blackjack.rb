@@ -37,22 +37,55 @@ class BlackjackGame
       @hand.total = @hand.total - 10 
 
     elsif @hand.total < 21
-      puts "Would you like to (h)it or (s)tay?"
+      player_hit_loop 
 
     end
-
-    answer = gets.chomp
-
-    if answer == "h"
-      hit
-    end
-
-    puts "#{@hand.cards}, #{@hand.total}"
+    
+    
   end
 
+
+  #HIT methods 
   def hit
-    @hand.player_hand << @deck.shift
+    @hand.player_hand << @deck.shift 
+    puts "Your new hand is the #{@hand.cards} with a total of #{@hand.total}"
   end
+
+  def dealer_hit
+    @dealer_hand.player_hand << @dealer_deck.shift
+  end 
+
+  #stand methods 
+
+  def stand 
+    puts "You stand with the #{@hand.cards} and a total of #{@hand.total}"
+  end
+  
+
+  #setting up dealer deck and hand and turn 
+  def dealer_turn
+    @dealer_deck = Deck.new.shuffle
+
+    @dealer_hand = Hand.new
+    2.times do 
+      @dealer_hand.player_hand << @dealer_deck.shift 
+    end 
+  end
+
+  def player_hit_loop 
+    @answer = ''
+    while @answer != "s"
+      puts "Would you like to (h)it or (s)tand?"
+      @answer = gets.chomp
+      if @answer == "h"
+        hit
+      elsif @answer == "s"
+        stand
+      end
+    end
+
+  end 
+
 
 end
 
