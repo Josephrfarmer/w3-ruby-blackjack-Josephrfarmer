@@ -29,17 +29,20 @@ class BlackjackGame
 
     puts "Your cards are #{@hand.cards} with the total of #{@hand.total}"
 
-    if @hand.total > 21
-      puts "Sorry you busted"
-      @wallet = @wallet - 10 
+    @hand.busted?
+    player_hit_loop
 
-    elsif @hand.total > 21 && @hand.includes?(:A)
-      @hand.total = @hand.total - 10 
+    # if @hand.total > 21
+    #   puts "Sorry you busted"
+    #   @wallet = @wallet - 10 
 
-    elsif @hand.total < 21
-      player_hit_loop 
+    # elsif @hand.total > 21 && @hand.includes?(:A)
+    #   @hand.total = @hand.total - 10 
 
-    end
+    # elsif @hand.total < 21
+    #   player_hit_loop 
+
+    # end
     
     
   end
@@ -79,10 +82,16 @@ class BlackjackGame
       @answer = gets.chomp
       if @answer == "h"
         hit
+        if @hand.busted?
+          puts "#{@wallet}"
+          return
+        end
       elsif @answer == "s"
         stand
       end
     end
+
+    puts "#{@wallet}"
 
   end 
 
