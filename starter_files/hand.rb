@@ -19,18 +19,12 @@ class Hand
     end.sum
   end
 
+  def wallet 
+    @wallet = 100
+  end 
+
   def busted?
-    if total > 21
-      puts "Sorry you busted"
-      @wallet = @wallet.to_i - 10
-
-    # elsif total < 21
-    #   puts "Would you like to (h)it or (s)tay?"
-
-    elsif total > 21 && @hand.includes?(:A)
-      total -= 10 
-
-    end
+    total > 21
   end
 
 end 

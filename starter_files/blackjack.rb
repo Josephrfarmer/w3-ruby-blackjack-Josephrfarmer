@@ -83,15 +83,15 @@ class BlackjackGame
       if @answer == "h"
         hit
         if @hand.busted?
-          puts "#{@wallet}"
+         puts "Sorry you busted"
+         @wallet = @wallet.to_i - 10
+         puts "#{@wallet}"
           return
         end
       elsif @answer == "s"
         stand
       end
     end
-
-    puts "#{@wallet}"
 
   end 
 
