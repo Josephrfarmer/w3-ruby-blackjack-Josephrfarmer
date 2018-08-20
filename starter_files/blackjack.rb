@@ -29,26 +29,13 @@ class BlackjackGame
 
     puts "Your cards are #{@hand.cards} with the total of #{@hand.total}"
 
-    @hand.busted?
+    # @hand.busted?
     player_hit_loop
-
-    # if @hand.total > 21
-    #   puts "Sorry you busted"
-    #   @wallet = @wallet - 10 
-
-    # elsif @hand.total > 21 && @hand.includes?(:A)
-    #   @hand.total = @hand.total - 10 
-
-    # elsif @hand.total < 21
-    #   player_hit_loop 
-
-    # end
-    
     
   end
 
 
-  #HIT methods 
+  #********************HIT methods****************************
   def hit
     @hand.player_hand << @deck.shift 
     puts "Your new hand is the #{@hand.cards} with a total of #{@hand.total}"
@@ -58,14 +45,14 @@ class BlackjackGame
     @dealer_hand.player_hand << @dealer_deck.shift
   end 
 
-  #stand methods 
+  #**************************stand methods**********************
 
   def stand 
     puts "You stand with the #{@hand.cards} and a total of #{@hand.total}"
   end
   
 
-  #setting up dealer deck and hand and turn 
+  #************setting up dealer deck and hand and turn****************
   def dealer_turn
     @dealer_deck = Deck.new.shuffle
 
@@ -73,8 +60,16 @@ class BlackjackGame
     2.times do 
       @dealer_hand.player_hand << @dealer_deck.shift 
     end 
+    while @dealer_hand.total < 17
+      dealer_hit
+         if dealer_hand.busted?
+          puts "The Dealer busted and you win the round"
+          @wallet = @wallet.to_i +10 
+         end
+     end
   end
 
+  # ********** player loop ************
   def player_hit_loop 
     @answer = ''
     while @answer != "s"
@@ -83,9 +78,9 @@ class BlackjackGame
       if @answer == "h"
         hit
         if @hand.busted?
-         puts "Sorry you busted"
+         puts "Sorry, you busted"
          @wallet = @wallet.to_i - 10
-         puts "#{@wallet}"
+         puts "You now have #{@wallet} in your wallet"
           return
         end
       elsif @answer == "s"
